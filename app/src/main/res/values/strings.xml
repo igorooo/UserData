@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UserData</string>
+    <string name="registration">Registration</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="login">Login</string>
+    <string name="date">Birth date</string>
+    <string name="email">Email</string>
+</resources>
