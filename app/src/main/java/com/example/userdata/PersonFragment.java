@@ -56,6 +56,8 @@ public class PersonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_person_list, container, false);
         mPeopleList = mListener.onListFragmentInteraction();
 
+
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -72,6 +74,7 @@ public class PersonFragment extends Fragment {
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume: starting...");
         super.onResume();
         mPeopleList = mListener.onListFragmentInteraction();
     }

@@ -6,4 +6,5 @@
     <string name="login">Login</string>
     <string name="date">Birth date</string>
     <string name="email">Email</string>
+    <string name="users">Users</string>
 </resources>

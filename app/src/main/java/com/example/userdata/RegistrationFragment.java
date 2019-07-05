@@ -1,6 +1,7 @@
 package com.example.userdata;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,17 @@ public class RegistrationFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnRegistrationFragmentInteractionListener) {
+            mListener = (OnRegistrationFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnRegistrationFragmentInteractionListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,13 +57,48 @@ public class RegistrationFragment extends Fragment {
         mButton_clear = (ImageButton) view.findViewById(R.id.Button_clear);
         mButton_save = (ImageButton) view.findViewById(R.id.Button_save);
 
+        mButton_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClearButtonClick();
+            }
+        });
+
+        mButton_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSaveButtonClick();
+            }
+        });
+
         return view;
+    }
+
+
+    private void onSaveButtonClick(){
+        Log.d(TAG, "onSaveButtonClick: clicked...");
+        Person person = new Person(mEditText_name.getText().toString(),
+                                    mEditText_surname.getText().toString(),
+                                    mEditText_login.getText().toString(),
+                                    mEditText_date.getText().toString(),
+                                    mEditText_email.getText().toString());
+
+        mListener.onRegistrationFragmentListener(person);
+    }
+
+    private void onClearButtonClick(){
+        Log.d(TAG, "onClearButtonClick: clicked...");
+        mEditText_name.getText().clear();
+        mEditText_surname.getText().clear();
+        mEditText_login.getText().clear();
+        mEditText_date.getText().clear();
+        mEditText_email.getText().clear();
     }
 
 
 
     public interface OnRegistrationFragmentInteractionListener{
-        public void onRegistrationFragmentListener();
+        public void onRegistrationFragmentListener(Person person);
     }
 
 }

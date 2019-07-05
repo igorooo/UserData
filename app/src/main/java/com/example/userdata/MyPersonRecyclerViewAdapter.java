@@ -26,7 +26,6 @@ public class MyPersonRecyclerViewAdapter extends RecyclerView.Adapter<MyPersonRe
     private ArrayList<Person> mPeopleList;
     private Context mContext;
 
-    //@TODO Before adding internal storage use, there will be 1 photo displayed 10 times
 
     private int mCount = 10;
     private Bitmap mPhoto;

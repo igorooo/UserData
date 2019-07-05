@@ -2,4 +2,5 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="listTextSize">20dp</dimen>
+    <dimen name="headingTextSize">40dp</dimen>
 </resources>

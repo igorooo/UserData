@@ -18,9 +18,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-// @TODO implement interfaces, do communication with fragments, check SP methods, test
+// @TODO implement interfaces, do communication with fragments, check SP methods, test, buttons
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements
+        RegistrationFragment.OnRegistrationFragmentInteractionListener,
+        PersonFragment.OnListFragmentInteractionListener {
     private static final String TAG = "MainActivity";
 
     // --Shared Prefs constants:
@@ -84,4 +86,13 @@ public class MainActivity extends FragmentActivity {
     }
 
 
+    @Override
+    public ArrayList<Person> onListFragmentInteraction() {
+        return loadData();
+    }
+
+    @Override
+    public void onRegistrationFragmentListener(Person person) {
+        addPosition(person);
+    }
 }
