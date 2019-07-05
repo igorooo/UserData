@@ -30,10 +30,7 @@ public class PersonFragment extends Fragment {
 
     private ArrayList<Person> mPeopleList;
     private OnListFragmentInteractionListener mListener;
-
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-
+    private MyPersonRecyclerViewAdapter mAdapter;
 
     public PersonFragment() {
     }
@@ -56,27 +53,25 @@ public class PersonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_person_list, container, false);
         mPeopleList = mListener.onListFragmentInteraction();
 
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        mAdapter = new MyPersonRecyclerViewAdapter(mPeopleList, (Context)mListener);
+        recyclerView.setAdapter(mAdapter);
 
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyPersonRecyclerViewAdapter(mPeopleList, (Context) mListener));
-        }
         return view;
     }
+
 
     @Override
     public void onResume() {
         Log.d(TAG, "onResume: starting...");
         super.onResume();
+    }
+
+    public void onItemAdded(){
+        Log.d(TAG, "OnItemAdded: called...");
         mPeopleList = mListener.onListFragmentInteraction();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -84,7 +79,6 @@ public class PersonFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
     public interface OnListFragmentInteractionListener {
         public ArrayList<Person> onListFragmentInteraction();

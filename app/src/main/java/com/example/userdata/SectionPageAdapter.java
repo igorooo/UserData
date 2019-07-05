@@ -1,5 +1,6 @@
 package com.example.userdata;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,9 +20,13 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
     }
 
-
     public SectionPageAdapter(FragmentManager fm){
         super(fm);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return mFragmentList.indexOf(object);
     }
 
     @Nullable

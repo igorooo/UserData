@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -32,6 +31,7 @@ public class MainActivity extends FragmentActivity implements
     private SectionPageAdapter mSectionPageAdapter;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private PersonFragment mListFragment;
 
 
     @Override
@@ -50,11 +50,16 @@ public class MainActivity extends FragmentActivity implements
 
     private void setupViewPager(ViewPager viewPager, SectionPageAdapter adapter){
 
+        //need to store ref to fragment with list for future notifications
+        mListFragment = new PersonFragment();
+
         adapter.addFragment(new RegistrationFragment(), "Registration");
-        adapter.addFragment(new PersonFragment(), "List");
+        adapter.addFragment(mListFragment, "List");
 
         viewPager.setAdapter(adapter);
     }
+
+
 
 
 
@@ -62,7 +67,7 @@ public class MainActivity extends FragmentActivity implements
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(SP_USERS,"");
-        Type type = new TypeToken<ArrayList<Bitmap>>(){}.getType();
+        Type type = new TypeToken<ArrayList<Person>>(){}.getType();
         ArrayList<Person> peopleList = gson.fromJson(json, type);
 
         if(peopleList == null){
@@ -83,6 +88,24 @@ public class MainActivity extends FragmentActivity implements
         String json = gson.toJson(photosList);
         editor.putString(SP_USERS,json);
         editor.apply();
+
+        refreshListFragment();
+    }
+
+    //@TODO Dynamic ListFragment (PersonFragment) refreshing still not working
+
+    private void refreshListFragment(){
+
+        Log.d(TAG, "refreshListFragment: called...");
+
+        if(mListFragment == null){
+            Log.d(TAG, "refreshListFragment called on null object reference!");
+            return;
+        }
+
+        mListFragment.onItemAdded();
+        mListFragment.onResume();
+        mSectionPageAdapter.notifyDataSetChanged();
     }
 
 

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -25,10 +24,6 @@ public class MyPersonRecyclerViewAdapter extends RecyclerView.Adapter<MyPersonRe
 
     private ArrayList<Person> mPeopleList;
     private Context mContext;
-
-
-    private int mCount = 10;
-    private Bitmap mPhoto;
 
     public MyPersonRecyclerViewAdapter(ArrayList<Person> peopleList, Context mContext) {
         this.mPeopleList = peopleList;
@@ -64,7 +59,6 @@ public class MyPersonRecyclerViewAdapter extends RecyclerView.Adapter<MyPersonRe
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView name,surname,login,date,email;
-        LinearLayout parentLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
